@@ -41,6 +41,8 @@ export default {
 <style lang="scss" scoped>
   #container {
 		padding-top: 40px;
+				padding-bottom: 60px;
+
 		overflow-x: hidden;
 	}
 	
