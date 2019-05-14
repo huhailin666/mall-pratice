@@ -1,10 +1,6 @@
 <template>
   <div>
-    <mt-swipe :auto="4000">
-      <mt-swipe-item v-for="(item,i) in lunboList" :key="i">
-        <img :src="item.img" alt>
-      </mt-swipe-item>
-    </mt-swipe>
+    <swiper :lunbotuList="lunbotuList" :isfull="true"></swiper>
     <ul class="mui-table-view mui-grid-view mui-grid-9">
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <router-link to="/home/newslist">
@@ -13,16 +9,16 @@
         </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/photolist">
           <img src="../../images/menu2.png" alt>
           <div class="mui-media-body">图片分享</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
-        <a href="#">
+        <router-link to="/home/goodslist">
           <img src="../../images/menu3.png" alt>
           <div class="mui-media-body">商品购买</div>
-        </a>
+        </router-link>
       </li>
       <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
         <a href="#">
@@ -46,10 +42,11 @@
   </div>
 </template>
 <script>
+import swiper from "../subcomponents/swiper.vue";
 export default {
   data() {
     return {
-      lunboList: []
+      lunbotuList: []
     };
   },
   created() {
@@ -57,30 +54,21 @@ export default {
   },
   methods: {
     getLunbotu() {
-      this.$http
-        .get("api/getlunbo")
-        .then(result => {
-          if (result.body.status === 0) {
-            this.lunboList = result.body.message;
-            console.log(result.body.message);
-          } else {
-            console.log("failed");
-          }
-        });
+      this.$http.get("api/getlunbo").then(result => {
+        if (result.body.status === 0) {
+          this.lunbotuList = result.body.message;
+        } else {
+          Toast("轮播图加载失败");
+        }
+      });
     }
+  },
+  components: {
+    swiper
   }
 };
 </script>
 <style lang="scss" scoped>
-.mint-swipe {
-  height: 200px;
-  .mint-swipe-item {
-    img {
-      width: 100%;
-      height: 100%;
-    }
-  }
-}
 .mui-table-view {
   background: #fff;
   li {
@@ -92,7 +80,6 @@ export default {
   }
 }
 .mui-grid-view.mui-grid-9 .mui-table-view-cell {
-    padding: 0 10px;
-
+  padding: 0 10px;
 }
 </style>
