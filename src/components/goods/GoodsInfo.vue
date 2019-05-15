@@ -20,8 +20,8 @@
         <div class="mui-card-content-inner">
           <p class="price">
             市场价:
-            <del>￥{{goodsInfo.sell_price}}</del>&nbsp;&nbsp;销售价：
-            <span class="now_price">￥{{goodsInfo.market_price}}</span>
+            <del>￥{{goodsInfo.market_price}}</del>&nbsp;&nbsp;销售价：
+            <span class="now_price">￥{{goodsInfo.sell_price}}</span>
           </p>
           <p>
             购买数量:
@@ -58,7 +58,7 @@ export default {
     return {
       id: this.$route.params.id,
       lunbotuList: [],
-      goodsInfo: [],
+      goodsInfo: {},
       ballFlag:false,//控制小球隐藏和显示的
       selectedCount:1
     };
@@ -118,6 +118,11 @@ export default {
     addToShopCar(){
       //添加到购物车
       this.ballFlag=!this.ballFlag
+      var goodsinfo = {//拼接出一个商品对象
+        id:this.id,count:this.selectedCount,price:this.goodsInfo.sell_price,selected:true
+      };
+      //调用store中的mutation来将商品加入购物车
+      this.$store.commit('addToCar',goodsinfo)
     }
   },
   components: {
