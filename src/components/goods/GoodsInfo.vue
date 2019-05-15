@@ -25,7 +25,7 @@
           </p>
           <p>
             购买数量:
-            <numbox @getCount="getSelectedCount"></numbox>
+            <numbox @getCount="getSelectedCount" :max="goodsInfo.stock_quantity"></numbox>
           </p>
           <p>
             <mt-button type="primary" size="small">立即购买</mt-button>
@@ -70,7 +70,6 @@ export default {
   methods: {
     getSelectedCount(count){
       this.selectedCount=count;
-      console.log(this.selectedCount)
     },
     beforeEnter(el){
       el.style.transform="translate(0,0)"
